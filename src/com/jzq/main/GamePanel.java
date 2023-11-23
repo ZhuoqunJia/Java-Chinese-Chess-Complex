@@ -29,15 +29,6 @@ public class GamePanel extends JPanel {
         System.out.println("调用GamePanel的无参构造方法！");
 //        super(); 必须在构造方法的第一行
         this.createChesses();
-        /**
-         * 如何操作棋子
-         *      1、点击棋盘
-         *      2、如何判断点击的地方是否有棋子
-         *      3、如何区分第一次选择，重新选择，移动，吃子
-         * 棋盘规则
-         *      1、红方不可以操作黑方棋子
-         *      2、一方走完结束，另一方才能走
-         */
         //添加点击事件
         this.addMouseListener(new MouseAdapter() {
             @Override
@@ -68,10 +59,6 @@ public class GamePanel extends JPanel {
                             GamePanel.this.selectedChess = c;
                         }else {
                             //吃子
-//                            if(selectedChess.isAbleMove(p, GamePanel.this)){
-//                                GamePanel.this.selectedChess.setP(p);
-//                                GamePanel.this.getChessByP(p).setP(null);
-//                            }
                             System.out.println("吃子状态");
                             if(GamePanel.this.selectedChess.isAbleMove(p, GamePanel.this)){
                                 /**
@@ -160,9 +147,6 @@ public class GamePanel extends JPanel {
 
         for (int i = 0; i < ps.length; i++) {
             Chess c = new Chess(names[i], ps[i], 0); //创建棋子对象
-//            c.setName(names[i]); //指定棋子名称
-//            c.setP(ps[i]); //指定棋子的网格坐标
-//            c.setPlayer(0); //这是棋子阵营
             c.setIndex(i); //设置棋子的索引
             this.chesses[i] = c; //将棋子保存到数组中
         }
@@ -198,11 +182,8 @@ public class GamePanel extends JPanel {
      */
     @Override //重写注解
     public void paint(Graphics g) {
-        //super调用父类中的方法
-//        super.paint(g); //清除原来的痕迹
         System.out.println("paint方法执行");
         String backGroundPicture = "picture" + File.separator + "qipan.jpg";
-//        System.out.println("每拖动一次窗口，就会在画板上重新画一次");
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image bgImg = toolkit.getImage(backGroundPicture);
         g.drawImage(bgImg, 0, 0, this);

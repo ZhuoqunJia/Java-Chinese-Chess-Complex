@@ -37,34 +37,6 @@ public class Chess {
         return name;
     }
 
-    /**
-     * 类的方法：
-     *      分类：
-     *          实例方法：
-     *              权限修饰符 返回值类型 方法名(形参列表){方法体}
-     *              调用：必须通过实例.方法名(实参);
-     *                  返回值类型：
-     *                      void: 方法不需要强制写return语句
-     *                      数据类型：必须是与之有关系的值或变量。
-     *                      比如，是基本数据类型，是什么类型就返回相应类型的值或变量。
-     *                      如果是引用数据类型，可以返回的是子类的对象或相同类型的值
-     *           静态方法（类方法）
-     *              权限修饰符 static 返回值类型 方法名(形参列表){方法体}
-     *              调用：可以通过实例.方法名(实参) 或 类名.方法名(实参);
-     *           构造方法
-     *              权限修饰符 类名(形参列表) {
-     *                  super(); //默认调用父类中的无参构造方法
-     *              }
-     *              作用：当构造对象，必须要做的事情，可以写在构造方法中，且在创建对象时只执行一次
-     *              注意：每个类，默认都有一个无参的构造方法，如果显示定义了一个有参的构造方法，则不再提供默认的无参构造方法，需要显示的定义无参构造方法。
-     */
-
-    /**
-     * 方法重载：
-     *      1、方法名必须相同，且形参列表必须不同
-     *      2、与返回值类型无关
-     *      3、与形参名无关，只与形参类型有关
-     */
     public Chess(){}
 
     public Chess(String name, int player, Point p){
@@ -78,7 +50,6 @@ public class Chess {
         this.player = player;
         this.setP(p);
     }
-
 
     public void setName(String name) {
         this.name = name;
@@ -101,7 +72,6 @@ public class Chess {
     }
 
     public void setP(Point p) {
-
         //克隆一个新的Point对象
         this.p = (Point) p.clone();
         if (this.initP == null) {
@@ -121,37 +91,6 @@ public class Chess {
      */
     public boolean isAbleMove(Point tp, GamePanel gamePanel){
         if("boss".equals(this.name)){
-//            //判断是否在王宫范围内
-//            if(tp.x < 4 || tp.x > 6){
-//                return false;
-//            }
-//            //上面和下面
-//            if(this.initP.y < 6){
-//                //上面
-//                if(tp.y > 3 || tp.y < 1){
-//                    return false;
-//                }
-//            }else {
-//                //下面
-//                if(tp.y < 8 || tp.y > 10){
-//                    return false;
-//                }
-//            }
-//            //判断是否走直线且只能走一步
-//            //x轴直线还是y轴直线
-//            if(p.y == tp.y){
-//                //x轴直线
-//                if (Math.abs(p.x - tp.x) == 1){
-//                    //走一步
-//                    return true;
-//                }
-//            } else if (p.x == tp.x) {
-//                //y轴直线
-//                if (Math.abs(p.y - tp.y) == 1){
-//                    //走一步
-//                    return true;
-//                }
-//            }
             if(this.isHome(tp)){
                 if(this.line(tp) > 1){
                     if(this.getStep(tp) == 1){
@@ -161,28 +100,6 @@ public class Chess {
             }
 
         } else if ("shi".equals(this.name)) {
-//            //判断是否在王宫范围内
-//            if(tp.x < 4 || tp.x > 6){
-//                return false;
-//            }
-//            //上面和下面
-//            if(this.initP.y < 6){
-//                //上面
-//                if(tp.y > 3 || tp.y < 1){
-//                    return false;
-//                }
-//            }else {
-//                //下面
-//                if(tp.y < 8 || tp.y > 10){
-//                    return false;
-//                }
-//            }
-//
-//            //走正斜线，且只能走一步
-//            if(Math.abs(tp.x - p.x) == Math.abs(tp.y - p.y) && Math.abs(tp.y - p.y) == 1){
-//                return true;
-//            }
-
             return isHome(tp) && line(tp) == 1 && getStep(tp) == 1;
         }else if ("xiang".equals(this.name)) {
             return this.line(tp) == 1 && this.getStep(tp) == 2 && !this.isBieJiao(tp, gamePanel) && !this.isOverRiver(tp);
@@ -193,10 +110,8 @@ public class Chess {
         }else if ("pao".equals(this.name)) {
             Chess c = gamePanel.getChessByP(tp);
             if(null != c){
-//                if(c.getPlayer() != this.player){
                     //吃子
                     return this.line(tp) > 1 && this.getCountFromOriginToTarget(tp, gamePanel) == 1;
-//                }
             }else {
                 //移动
                 return this.line(tp) > 1 && this.getCountFromOriginToTarget(tp, gamePanel) == 0;
@@ -365,8 +280,6 @@ public class Chess {
                 end = tp.y;
             }else {
                 //从下往上
-//               start = this.p.y -1;
-//               end = tp.y;
                 //保证start是小的值，end是大的值
                 start = tp.y + 1;
                 end = this.p.y;
@@ -396,7 +309,7 @@ public class Chess {
                 count++;
             }
         }
-        System.out.println("棋子数量===========" + count);
+        System.out.println("原点和目标点中间棋子数量===========" + count);
         return count;
     }
 
@@ -453,16 +366,6 @@ public class Chess {
      * 根据xy坐标计算网格坐标对象
      * @param x
      * @param y
-     *
-     * static：静态关键字
-     *      修饰方法：称为类方法或静态方法
-     *          如何调用
-     *              实例.方法()或类名.方法()
-     *          注意：类方法只能使用类属性
-     *      修饰属性：称为类属性或静态属性
-     *          如何调用
-     *              实例.属性名 或 类名.属性名
-     *          注意：静态属性只有一个共用的内存地址，所以不管有多少个对象，只需要修改一次，其他对象都会受影响
      */
     public static Point getPointFromXY(int x, int y){
         Point p = new Point();
@@ -472,8 +375,6 @@ public class Chess {
             return null;
         }
         return p;
-//        return new Point((x - (this.MARGIN - this.SIZE / 2)) / this.SPACE + 1, (y - (this.MARGIN - this.SIZE / 2)) / this.SPACE + 1);
-
     }
 
     /**
@@ -496,13 +397,5 @@ public class Chess {
                 ", p=" + p +
                 ", initP=" + initP +
                 '}';
-    }
-
-    public static void main(String[] args) {
-        Point p = new Point();
-        p = null;
-        System.out.println(p);
-        p.clone();
-
     }
 }
