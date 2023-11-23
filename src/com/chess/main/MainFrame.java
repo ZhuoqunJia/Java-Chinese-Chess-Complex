@@ -8,8 +8,10 @@ package com.chess.main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class MainFrame {
+public class MainFrame implements ActionListener {
     public static void main(String[] args) {
         //创建了有一个名称为frame的JFrame实例对象，实例又称对象
         JFrame frame = new JFrame();
@@ -44,5 +46,10 @@ public class MainFrame {
         btnPanel.add(btnRenShu);
         //设置窗口可见，建议放在后面
         frame.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

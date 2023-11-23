@@ -18,5 +18,5 @@ public abstract class AbstractTest01 {
         System.out.println("静态方法");
     }
 
-    protected abstract void a1();
+    abstract void a1();
 }
