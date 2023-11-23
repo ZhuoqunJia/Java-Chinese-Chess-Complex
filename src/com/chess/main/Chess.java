@@ -1,4 +1,4 @@
-package com.jzq.main;
+package com.chess.main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +9,7 @@ import java.io.File;
  * @Date: 2023/11/20 16:43
  * @Description:
  */
-public class Chess {
+public abstract class Chess {
     //定义一个常量，只能在定义时或代码块中修改值，其他不允许修改
     //棋子大小
     private static final int SIZE = 30;
@@ -23,11 +23,11 @@ public class Chess {
     //棋子图片后缀
     private static final String SUFFIX = ".png";
     //棋子阵营，0：红，1：黑
-    private int player;
+    protected int player;
     //棋子绘制时的实际坐标位置
     private int x, y;
     //棋子的网格坐标
-    private Point p;
+    protected Point p;
     //棋子的网格坐标，初始位置，不可改变
     private Point initP;
     //保存每个棋子的索引位置
@@ -37,7 +37,7 @@ public class Chess {
         return name;
     }
 
-    public Chess(){}
+
 
     public Chess(String name, int player, Point p){
         this.name = name;
@@ -45,11 +45,6 @@ public class Chess {
         this.setP(p);
     }
 
-    public Chess(String name, Point p, int player){
-        this.name = name;
-        this.player = player;
-        this.setP(p);
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -89,48 +84,7 @@ public class Chess {
      * @param tp
      * @return 返回true，表示可移动，返回false，表示不可移动
      */
-    public boolean isAbleMove(Point tp, GamePanel gamePanel){
-        if("boss".equals(this.name)){
-            if(this.isHome(tp)){
-                if(this.line(tp) > 1){
-                    if(this.getStep(tp) == 1){
-                        return true;
-                    }
-                }
-            }
-
-        } else if ("shi".equals(this.name)) {
-            return isHome(tp) && line(tp) == 1 && getStep(tp) == 1;
-        }else if ("xiang".equals(this.name)) {
-            return this.line(tp) == 1 && this.getStep(tp) == 2 && !this.isBieJiao(tp, gamePanel) && !this.isOverRiver(tp);
-        }else if ("ma".equals(this.name)) {
-            return (this.line(tp) == -1 || this.line(tp) == 0) && !this.isBieJiao(tp, gamePanel);
-        }else if ("che".equals(this.name)) {
-            return this.line(tp) > 1 && this.getCountFromOriginToTarget(tp, gamePanel) == 0;
-        }else if ("pao".equals(this.name)) {
-            Chess c = gamePanel.getChessByP(tp);
-            if(null != c){
-                    //吃子
-                    return this.line(tp) > 1 && this.getCountFromOriginToTarget(tp, gamePanel) == 1;
-            }else {
-                //移动
-                return this.line(tp) > 1 && this.getCountFromOriginToTarget(tp, gamePanel) == 0;
-            }
-        }else if ("bing".equals(this.name)) {
-            //兵移动规则：不能后退，只能走直线，只能走一步
-            if(this.line(tp) < 2 || this.getStep(tp) != 1 || this.isBack(tp)){
-                return false;
-            }
-            //没过河只能前进，过了河既可以前进也可以左右走
-            boolean overRiver = this.isOverRiver(this.p);
-            if(overRiver){
-                return this.line(tp) > 1;
-            }else {
-                return this.line(tp) == 2;
-            }
-        }
-        return false;
-    }
+    public abstract boolean isAbleMove(Point tp, GamePanel gamePanel);
 
     /**
      * 判断棋子的网格坐标初始是在上半边还是下半边

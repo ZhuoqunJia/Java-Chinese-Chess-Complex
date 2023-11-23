@@ -1,4 +1,4 @@
-package com.jzq.demo;
+package com.chess.demo;
 
 /**
  * @Author: JZQ
