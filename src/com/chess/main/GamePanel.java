@@ -11,10 +11,16 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.LinkedList;
 
 public class GamePanel extends JPanel {
     //定义一个保存所有棋子的成员变量，变量值类型为数组
     private Chess[] chesses = new Chess[32]; //保存所有的棋子
+    //自定义实现双向链表数据结构
+    //Java集合的使用
+    private LinkedList<Record> huiqiList = new LinkedList<>();
+
+
     //当前选中的棋子
     private Chess selectedChess;
     //记住当前的阵营
