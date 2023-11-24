@@ -15,7 +15,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
     public MainFrame(){
         //设置窗口的大小
-        this.setSize(550,500);
+        this.setSize(555,500);
         //设置窗口居中
         this.setLocationRelativeTo(null);
         //设置点击关闭按钮同时结束JVM，每一个Java运行的程序都是一个JVM，是一个JVM进程
@@ -23,13 +23,15 @@ public class MainFrame extends JFrame implements ActionListener {
         //设置布局管理器
         this.setLayout(new BorderLayout());
         //将游戏面板添加到窗口中
-        this.add(new GamePanel(), BorderLayout.CENTER);
+        GamePanel gamePanel = new GamePanel();
+        this.add(gamePanel, BorderLayout.CENTER);
 //        System.out.println("==================");
         //添加按钮面板
         JPanel btnPanel = new JPanel(new GridLayout(4, 1));
         this.add(btnPanel, BorderLayout.EAST);
         JLabel hintLabel = new JLabel("红方走");
         btnPanel.add(hintLabel);
+        gamePanel.setHintLabel(hintLabel);
 
         JButton btnHuiQi = new JButton("悔棋");
         btnHuiQi.setActionCommand("huiqi");

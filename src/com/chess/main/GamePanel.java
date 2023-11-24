@@ -20,6 +20,16 @@ public class GamePanel extends JPanel {
     //记住当前的阵营
     //默认红方先走
     private int currentPlayer = 0;
+    //提示的label
+    private JLabel hintLabel;
+
+    public JLabel getHintLabel() {
+        return hintLabel;
+    }
+
+    public void setHintLabel(JLabel hintLabel) {
+        this.hintLabel = hintLabel;
+    }
 
     //构造方法
     //无参构造方法：权限修饰符 类名(){}
@@ -46,6 +56,8 @@ public class GamePanel extends JPanel {
                     if (GamePanel.this.selectedChess != null && GamePanel.this.selectedChess.getPlayer() != GamePanel.this.currentPlayer) {
                         //说明此时选择不是己方阵营的棋子，将已选择的棋子置为null
                         GamePanel.this.selectedChess = null;
+                        GamePanel.this.hintLabel.setText("<html>不能选择<br/>对方的棋子！<br/>" + "当前：" + (GamePanel.this.getCurrentPlayer() == 0 ? "红方走" : "黑方走") + "</html>");
+//                        GamePanel.this.hintLabel.setText("不能选择对方的棋子！\n" + "当前是：" + (GamePanel.this.getCurrentPlayer() == 0 ? "红方走" : "黑方走"));
                     }
                 } else {
                     //重新选择，移动，吃子
@@ -97,8 +109,18 @@ public class GamePanel extends JPanel {
      * 结束当前回合
      */
     private void overMyTurn() {
-        this.currentPlayer = this.currentPlayer == 0 ? 1 : 0;
+//        this.currentPlayer = this.currentPlayer == 0 ? 1 : 0;
+        this.setCurrentPlayer(this.getCurrentPlayer() == 0 ? 1 : 0);
         this.selectedChess = null;
+        hintLabel.setText(this.getCurrentPlayer() == 0 ? "红方走" : "黑方走");
+    }
+
+    public int getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(int currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     /**
