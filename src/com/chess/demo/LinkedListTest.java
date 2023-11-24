@@ -39,7 +39,23 @@ public class LinkedListTest {
         ((LinkedList) list).pollLast();
         System.out.println(list);
 
-        LinkedList<Object> linkedList = new LinkedList<>();
+        LinkedList<Integer>  linkedList = new LinkedList<>();
         linkedList.add(1);
+        linkedList.add(2);
+
+        try {
+            Class<?> c = Class.forName("java.lang.String");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+}
+
+class MyClass<T extends Number>{
+    public static void main(String[] args) {
+        MyClass<Float> myClass = new MyClass<>();
+//        MyClass<String> myClass1 = new MyClass<>();
     }
 }

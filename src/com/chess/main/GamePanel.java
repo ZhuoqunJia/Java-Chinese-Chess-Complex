@@ -53,7 +53,7 @@ public class GamePanel extends JPanel {
                 System.out.println("===================================以下为一个棋子对象的操作===================================");
                 System.out.println("点击棋盘的坐标为：x=" + e.getX() + ",y=" + e.getY());
                 Point p = Chess.getPointFromXY(e.getX(), e.getY());
-                System.out.println("点击棋子对象的棋盘的网格坐标对象为：p===" + p);
+                System.out.println("点击棋盘的网格坐标对象为：p===" + p);
 
                 if (null == selectedChess) {
                     //第一次选择
@@ -76,34 +76,38 @@ public class GamePanel extends JPanel {
                             System.out.println("重新选择");
                             GamePanel.this.selectedChess = c;
                         } else {
-                            //吃子
-                            System.out.println("吃子状态");
-                            if (GamePanel.this.selectedChess.isAbleMove(p, GamePanel.this)) {
-                                /**
-                                 * 1、从数组中删除被吃掉的棋子
-                                 * 2、修改要移动的棋子坐标
-                                 */
-                                System.out.println("吃子");
-                                GamePanel.this.chesses[c.getIndex()] = null;
-                                GamePanel.this.selectedChess.setP(p);
-                                //回合结束
-                                GamePanel.this.overMyTurn();
+                            if (null != p) {
+                                //吃子
+                                System.out.println("准备吃子");
+                                if (GamePanel.this.selectedChess.isAbleMove(p, GamePanel.this)) {
+                                    /**
+                                     * 1、从数组中删除被吃掉的棋子
+                                     * 2、修改要移动的棋子坐标
+                                     */
+                                    System.out.println("吃子");
+                                    GamePanel.this.chesses[c.getIndex()] = null;
+                                    GamePanel.this.selectedChess.setP(p);
+                                    //回合结束
+                                    GamePanel.this.overMyTurn();
+                                }
                             }
                         }
                     } else {
                         //第n次点击的时候没有棋子，点的是空白地方
                         //移动
-                        System.out.println("移动状态");
-                        if (selectedChess.isAbleMove(p, GamePanel.this)) { //特殊写法
-                            System.out.println("移动");
-                            selectedChess.setP(p);
-                            //回合结束
-                            //要写在if判断中，才是真正的移动了
-                            GamePanel.this.overMyTurn();
+                        if (null != p) {
+                            System.out.println("准备移动");
+                            if (selectedChess.isAbleMove(p, GamePanel.this)) { //特殊写法
+                                System.out.println("移动");
+                                selectedChess.setP(p);
+                                //回合结束
+                                //要写在if判断中，才是真正的移动了
+                                GamePanel.this.overMyTurn();
+                            }
                         }
                     }
                 }
-                System.out.println("点击的棋子对象为：selectedChess===" + selectedChess);
+                System.out.println("选中的棋子对象为：selectedChess===" + selectedChess);
                 System.out.println("===================================以上为一个棋子对象的操作===================================");
                 //刷新棋盘，即重新执行paint方法
                 repaint();
@@ -178,7 +182,7 @@ public class GamePanel extends JPanel {
              * 使用多态和开发模式降低耦合度
              */
             Chess c = ChessFactory.create(names[i], 0, xs[i]);
-            if(null != c){
+            if (null != c) {
                 c.setIndex(i);
             }
             this.chesses[i] = c;
@@ -186,7 +190,7 @@ public class GamePanel extends JPanel {
 
         for (int i = 0; i < xs.length; i++) {
             Chess c = ChessFactory.create(names[i], 1, xs[i]);
-            if(null != c){
+            if (null != c) {
                 c.reserve(); //反转网络坐标
                 c.setIndex(i + 16); //设置棋子的索引
                 this.chesses[c.getIndex()] = c; //将棋子保存到数组中
