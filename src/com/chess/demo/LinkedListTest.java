@@ -39,9 +39,9 @@ public class LinkedListTest {
         ((LinkedList) list).pollLast();
         System.out.println(list);
 
-        LinkedList<Integer>  linkedList = new LinkedList<>();
-        linkedList.add(1);
-        linkedList.add(2);
+        LinkedList<? super MyClass>  linkedList = new LinkedList<>();
+        linkedList.add(new MyClass());
+        linkedList.add(new My());
 
         try {
             Class<?> c = Class.forName("java.lang.String");
@@ -53,9 +53,13 @@ public class LinkedListTest {
     }
 }
 
-class MyClass<T extends Number>{
+class SuperFu{}
+
+class MyClass extends SuperFu{
     public static void main(String[] args) {
-        MyClass<Float> myClass = new MyClass<>();
+//        MyClass<Float> myClass = new MyClass<>();
 //        MyClass<String> myClass1 = new MyClass<>();
     }
 }
+
+class My extends MyClass{}
