@@ -14,14 +14,31 @@ public class Record {
     private Point start;
     //结束坐标
     private Point end;
+    //被吃掉的棋子
+    private Chess eatedChess;
 
     public Record() {
+    }
+
+    public Record(Chess chess, Point start, Point end, Chess eatedChess) {
+        this.chess = chess;
+        this.start = start;
+        this.end = end;
+        this.eatedChess = eatedChess;
     }
 
     public Record(Chess chess, Point start, Point end) {
         this.chess = chess;
         this.start = start;
         this.end = end;
+    }
+
+    public Chess getEatedChess() {
+        return eatedChess;
+    }
+
+    public void setEatedChess(Chess eatedChess) {
+        this.eatedChess = eatedChess;
     }
 
     public Chess getChess() {
@@ -54,6 +71,7 @@ public class Record {
                 "chess=" + chess +
                 ", start=" + start +
                 ", end=" + end +
+                ", eatedChess=" + eatedChess +
                 '}';
     }
 }

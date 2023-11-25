@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame implements ActionListener {
 
+    private final GamePanel gamePanel;
+
     public MainFrame(){
         //设置窗口的大小
         this.setSize(555,500);
@@ -23,7 +25,7 @@ public class MainFrame extends JFrame implements ActionListener {
         //设置布局管理器
         this.setLayout(new BorderLayout());
         //将游戏面板添加到窗口中
-        GamePanel gamePanel = new GamePanel();
+        this.gamePanel = new GamePanel();
         this.add(gamePanel, BorderLayout.CENTER);
 //        System.out.println("==================");
         //添加按钮面板
@@ -73,6 +75,7 @@ public class MainFrame extends JFrame implements ActionListener {
         switch (cmd){
             case "huiqi":
                 System.out.println("huiqi");
+                this.gamePanel.huiqi();
                 break;
             case "baocun":
                 System.out.println("baocun");

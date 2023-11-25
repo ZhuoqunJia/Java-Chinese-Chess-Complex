@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class GamePanel extends JPanel {
     //定义一个保存所有棋子的成员变量，变量值类型为数组
@@ -85,6 +86,13 @@ public class GamePanel extends JPanel {
                                      * 2、修改要移动的棋子坐标
                                      */
                                     System.out.println("吃子");
+                                    Record record = new Record();
+                                    record.setChess(GamePanel.this.selectedChess);
+                                    record.setStart(GamePanel.this.selectedChess.getP());
+                                    record.setEnd(p);
+                                    record.setEatedChess(c);
+                                    GamePanel.this.huiqiList.add(record);
+
                                     GamePanel.this.chesses[c.getIndex()] = null;
                                     GamePanel.this.selectedChess.setP(p);
                                     //回合结束
@@ -99,6 +107,13 @@ public class GamePanel extends JPanel {
                             System.out.println("准备移动");
                             if (selectedChess.isAbleMove(p, GamePanel.this)) { //特殊写法
                                 System.out.println("移动");
+                                Record record = new Record();
+                                record.setChess(GamePanel.this.selectedChess);
+                                record.setStart(GamePanel.this.selectedChess.getP());
+                                record.setEnd(p);
+                                record.setEatedChess(c);
+                                GamePanel.this.huiqiList.add(record);
+
                                 selectedChess.setP(p);
                                 //回合结束
                                 //要写在if判断中，才是真正的移动了
@@ -108,6 +123,7 @@ public class GamePanel extends JPanel {
                     }
                 }
                 System.out.println("选中的棋子对象为：selectedChess===" + selectedChess);
+                System.out.println("棋子记录集合数据：" + GamePanel.this.huiqiList);
                 System.out.println("===================================以上为一个棋子对象的操作===================================");
                 //刷新棋盘，即重新执行paint方法
                 repaint();
@@ -209,6 +225,28 @@ public class GamePanel extends JPanel {
             if (null != item) {
                 item.draw(g, this);
             }
+        }
+    }
+
+    /**
+     * 实现悔棋功能
+     */
+    public void huiqi() {
+        if (this.huiqiList.size() != 0) {
+
+            Record record = this.huiqiList.pollLast();
+            //将操作的棋子的坐标还原
+            record.getChess().setP(record.getStart());
+            this.chesses[record.getChess().getIndex()] = record.getChess();
+
+            if (record.getEatedChess() != null) {
+                this.chesses[record.getEatedChess().getIndex()] = record.getEatedChess();
+            }
+
+            this.currentPlayer = 1 - record.getChess().getPlayer();
+            this.overMyTurn();
+            //刷新棋盘
+            this.repaint();
         }
     }
 
