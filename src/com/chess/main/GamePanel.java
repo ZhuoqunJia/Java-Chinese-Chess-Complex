@@ -21,7 +21,6 @@ public class GamePanel extends JPanel {
     //Java集合的使用
     private LinkedList<Record> huiqiList = new LinkedList<>();
 
-
     //当前选中的棋子
     private Chess selectedChess;
     //记住当前的阵营
@@ -32,6 +31,15 @@ public class GamePanel extends JPanel {
 
     public JLabel getHintLabel() {
         return hintLabel;
+    }
+
+    public Chess[] getChesses() {
+        return chesses;
+    }
+
+    public void setChesses(Chess[] chesses) {
+        this.chesses = chesses;
+        this.repaint();
     }
 
     public void setHintLabel(JLabel hintLabel) {

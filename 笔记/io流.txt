@@ -12,7 +12,7 @@ File类
         length(); 文件内容的长度
         list(); 列举文件夹中的所有文件或文件夹
         getParent(); 获取当前文件的目录String类型
-        getParent(); 获取当前文件的目录File类型
+        getParentFile(); 获取当前文件的目录File类型
 输入流：将文件内容读取到电脑内存中
 
 输出流：写入内容到文件中

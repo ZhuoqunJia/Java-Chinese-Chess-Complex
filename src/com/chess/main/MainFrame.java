@@ -10,6 +10,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainFrame extends JFrame implements ActionListener {
 
@@ -79,9 +82,11 @@ public class MainFrame extends JFrame implements ActionListener {
                 break;
             case "baocun":
                 System.out.println("baocun");
+                this.save();
                 break;
             case "daoru":
                 System.out.println("daoru");
+                this.daoru();
                 break;
             case "qiuhe":
                 System.out.println("qiuhe");
@@ -89,6 +94,71 @@ public class MainFrame extends JFrame implements ActionListener {
             case "renshu":
                 System.out.println("renshu");
                 break;
+        }
+    }
+
+    /**
+     * 导入棋谱
+     */
+    private void daoru() {
+        JFileChooser chooser = new JFileChooser();
+//        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int result = chooser.showOpenDialog(null);
+        File parent = chooser.getSelectedFile();
+
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(parent))){
+            Object object = ois.readObject();
+            System.out.println(object);
+            if(object instanceof Chess[]){
+                gamePanel.setChesses((Chess[]) object);
+            }
+        }catch (FileNotFoundException fileNotFoundException){
+            fileNotFoundException.printStackTrace();
+        }catch (ClassNotFoundException classNotFoundException){
+            classNotFoundException.printStackTrace();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    /**
+     * 保存棋谱
+     */
+    private void save(){
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int result = chooser.showOpenDialog(null);
+        File parent = chooser.getSelectedFile();
+        System.out.println("parent-->" + parent);
+        //创建文件
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss-SSS");
+        String path = parent.getAbsolutePath() + File.separator + simpleDateFormat.format(new Date(System.currentTimeMillis())) + ".txt";
+        File file = new File(path);
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        //创建对象字节输出流
+        ObjectOutputStream oos = null;
+        try{
+            //处理流和节点流
+            oos = new ObjectOutputStream(new FileOutputStream(file));
+            oos.writeObject(gamePanel.getChesses());
+        }catch (FileNotFoundException e1){
+            e1.printStackTrace();
+        }catch(IOException ioException){
+            ioException.printStackTrace();
+        }finally {
+            if(null != oos){
+                try{
+                    oos.close();
+                }catch (IOException ioException){
+                    ioException.printStackTrace();
+                }
+            }
         }
     }
 }

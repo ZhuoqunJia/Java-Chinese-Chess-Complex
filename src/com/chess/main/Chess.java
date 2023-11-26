@@ -3,13 +3,16 @@ package com.chess.main;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.Serializable;
 
 /**
  * @Author: JZQ
  * @Date: 2023/11/20 16:43
  * @Description:
  */
-public abstract class Chess {
+public abstract class Chess implements Serializable {
+    //序列化版本号
+    private static final long serialVersionUID = -3616979406681967108L;
     //定义一个常量，只能在定义时或代码块中修改值，其他不允许修改
     //棋子大小
     private static final int SIZE = 30;
